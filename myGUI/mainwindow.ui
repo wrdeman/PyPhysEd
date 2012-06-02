@@ -1,0 +1,431 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<ui version="4.0">
+ <class>MainWindow</class>
+ <widget class="QMainWindow" name="MainWindow">
+  <property name="enabled">
+   <bool>true</bool>
+  </property>
+  <property name="geometry">
+   <rect>
+    <x>0</x>
+    <y>0</y>
+    <width>684</width>
+    <height>633</height>
+   </rect>
+  </property>
+  <property name="sizePolicy">
+   <sizepolicy hsizetype="Expanding" vsizetype="Expanding">
+    <horstretch>0</horstretch>
+    <verstretch>0</verstretch>
+   </sizepolicy>
+  </property>
+  <property name="windowTitle">
+   <string>MainWindow</string>
+  </property>
+  <widget class="QWidget" name="centralWidget">
+   <layout class="QGridLayout" name="gridLayout_3">
+    <item row="0" column="0">
+     <widget class="QLabel" name="video_lbl">
+      <property name="enabled">
+       <bool>true</bool>
+      </property>
+      <property name="sizePolicy">
+       <sizepolicy hsizetype="Expanding" vsizetype="Expanding">
+        <horstretch>0</horstretch>
+        <verstretch>0</verstretch>
+       </sizepolicy>
+      </property>
+      <property name="minimumSize">
+       <size>
+        <width>200</width>
+        <height>0</height>
+       </size>
+      </property>
+      <property name="maximumSize">
+       <size>
+        <width>400</width>
+        <height>16777215</height>
+       </size>
+      </property>
+      <property name="autoFillBackground">
+       <bool>true</bool>
+      </property>
+      <property name="text">
+       <string/>
+      </property>
+     </widget>
+    </item>
+    <item row="1" column="0">
+     <widget class="QPushButton" name="pushStart">
+      <property name="text">
+       <string>Start</string>
+      </property>
+     </widget>
+    </item>
+    <item row="0" column="1">
+     <widget class="QSplitter" name="splitter">
+      <property name="minimumSize">
+       <size>
+        <width>200</width>
+        <height>0</height>
+       </size>
+      </property>
+      <property name="maximumSize">
+       <size>
+        <width>16777215</width>
+        <height>16777215</height>
+       </size>
+      </property>
+      <property name="orientation">
+       <enum>Qt::Vertical</enum>
+      </property>
+      <widget class="QFrame" name="frame_qwt1">
+       <property name="frameShape">
+        <enum>QFrame::StyledPanel</enum>
+       </property>
+       <property name="frameShadow">
+        <enum>QFrame::Raised</enum>
+       </property>
+       <layout class="QGridLayout" name="gridLayout">
+        <item row="0" column="0">
+         <widget class="QwtPlot" name="qwtPlot1"/>
+        </item>
+       </layout>
+      </widget>
+      <widget class="QFrame" name="frame_qwt2">
+       <property name="frameShape">
+        <enum>QFrame::StyledPanel</enum>
+       </property>
+       <property name="frameShadow">
+        <enum>QFrame::Raised</enum>
+       </property>
+       <layout class="QGridLayout" name="gridLayout_2">
+        <item row="0" column="0">
+         <widget class="QwtPlot" name="qwtPlot2"/>
+        </item>
+       </layout>
+      </widget>
+     </widget>
+    </item>
+    <item row="2" column="0">
+     <widget class="QCheckBox" name="pausefirstBox">
+      <property name="text">
+       <string>Pause first frame</string>
+      </property>
+      <property name="tristate">
+       <bool>false</bool>
+      </property>
+     </widget>
+    </item>
+   </layout>
+  </widget>
+  <widget class="QMenuBar" name="menuBar">
+   <property name="geometry">
+    <rect>
+     <x>0</x>
+     <y>0</y>
+     <width>684</width>
+     <height>20</height>
+    </rect>
+   </property>
+   <widget class="QMenu" name="menuFile">
+    <property name="title">
+     <string>File</string>
+    </property>
+    <widget class="QMenu" name="menuInput">
+     <property name="title">
+      <string>Input</string>
+     </property>
+     <addaction name="actionFile"/>
+     <addaction name="actionCam"/>
+    </widget>
+    <addaction name="menuInput"/>
+    <addaction name="separator"/>
+    <addaction name="actionQuit"/>
+   </widget>
+   <widget class="QMenu" name="menuAbout">
+    <property name="title">
+     <string>About</string>
+    </property>
+   </widget>
+   <widget class="QMenu" name="menuTools">
+    <property name="title">
+     <string>Tools</string>
+    </property>
+    <addaction name="actionTracking"/>
+    <addaction name="actionUpdate"/>
+   </widget>
+   <widget class="QMenu" name="menuPlot">
+    <property name="title">
+     <string>Plot</string>
+    </property>
+    <widget class="QMenu" name="menuPlot1">
+     <property name="title">
+      <string>Plot1</string>
+     </property>
+     <widget class="QMenu" name="menuX_axis">
+      <property name="title">
+       <string>x-axis</string>
+      </property>
+      <addaction name="actionTime"/>
+      <addaction name="actionAmp"/>
+      <addaction name="actionD_amp_dt"/>
+      <addaction name="actionTheta"/>
+      <addaction name="actionD_theta_dt"/>
+      <addaction name="actionX"/>
+      <addaction name="actionY"/>
+     </widget>
+     <widget class="QMenu" name="menuY_axis">
+      <property name="title">
+       <string>y-axis</string>
+      </property>
+      <addaction name="actionTime_2"/>
+      <addaction name="actionAmp_2"/>
+      <addaction name="actionD_amp_dt_2"/>
+      <addaction name="actionTheta_2"/>
+      <addaction name="actionD_theta_dt_2"/>
+      <addaction name="actionX_2"/>
+      <addaction name="actionY_2"/>
+     </widget>
+     <addaction name="menuX_axis"/>
+     <addaction name="menuY_axis"/>
+    </widget>
+    <widget class="QMenu" name="menuPlot2">
+     <property name="title">
+      <string>Plot2</string>
+     </property>
+     <widget class="QMenu" name="menuX_axis_2">
+      <property name="title">
+       <string>x-axis</string>
+      </property>
+      <addaction name="actionTime_3"/>
+      <addaction name="actionAmp_3"/>
+      <addaction name="actionD_amp_dt_3"/>
+      <addaction name="actionTheta_3"/>
+      <addaction name="actionD_theta_dt_3"/>
+      <addaction name="actionX_3"/>
+      <addaction name="actionY_3"/>
+     </widget>
+     <widget class="QMenu" name="menuY_axis_2">
+      <property name="title">
+       <string>y-axis</string>
+      </property>
+      <addaction name="actionTime_4"/>
+      <addaction name="actionAmp_4"/>
+      <addaction name="actionD_amp_dt_4"/>
+      <addaction name="actionTheta_4"/>
+      <addaction name="actionD_theta_dt_4"/>
+      <addaction name="actionX_4"/>
+      <addaction name="actionY_4"/>
+     </widget>
+     <addaction name="menuX_axis_2"/>
+     <addaction name="menuY_axis_2"/>
+     <addaction name="actionRemove"/>
+    </widget>
+    <addaction name="menuPlot1"/>
+    <addaction name="menuPlot2"/>
+   </widget>
+   <addaction name="menuFile"/>
+   <addaction name="menuTools"/>
+   <addaction name="menuPlot"/>
+   <addaction name="menuAbout"/>
+  </widget>
+  <widget class="QToolBar" name="mainToolBar">
+   <attribute name="toolBarArea">
+    <enum>TopToolBarArea</enum>
+   </attribute>
+   <attribute name="toolBarBreak">
+    <bool>false</bool>
+   </attribute>
+  </widget>
+  <widget class="QStatusBar" name="statusBar"/>
+  <action name="actionFile">
+   <property name="enabled">
+    <bool>true</bool>
+   </property>
+   <property name="text">
+    <string>File</string>
+   </property>
+  </action>
+  <action name="actionCam">
+   <property name="text">
+    <string>Cam</string>
+   </property>
+  </action>
+  <action name="actionQuit">
+   <property name="text">
+    <string>Quit</string>
+   </property>
+  </action>
+  <action name="actionTracking">
+   <property name="text">
+    <string>Tracking</string>
+   </property>
+  </action>
+  <action name="actionPlot3">
+   <property name="text">
+    <string>Plot3</string>
+   </property>
+  </action>
+  <action name="actionTime">
+   <property name="text">
+    <string>time</string>
+   </property>
+  </action>
+  <action name="actionAmp">
+   <property name="text">
+    <string>amp</string>
+   </property>
+  </action>
+  <action name="actionD_amp_dt">
+   <property name="text">
+    <string>d(amp)/dt</string>
+   </property>
+  </action>
+  <action name="actionTheta">
+   <property name="text">
+    <string>theta</string>
+   </property>
+  </action>
+  <action name="actionD_theta_dt">
+   <property name="text">
+    <string>d(theta)/dt</string>
+   </property>
+  </action>
+  <action name="actionX">
+   <property name="text">
+    <string>x</string>
+   </property>
+  </action>
+  <action name="actionY">
+   <property name="text">
+    <string>y</string>
+   </property>
+  </action>
+  <action name="actionTime_2">
+   <property name="text">
+    <string>time</string>
+   </property>
+  </action>
+  <action name="actionAmp_2">
+   <property name="text">
+    <string>amp</string>
+   </property>
+  </action>
+  <action name="actionD_amp_dt_2">
+   <property name="text">
+    <string>d(amp)/dt</string>
+   </property>
+  </action>
+  <action name="actionTheta_2">
+   <property name="text">
+    <string>theta</string>
+   </property>
+  </action>
+  <action name="actionD_theta_dt_2">
+   <property name="text">
+    <string>d(theta)/dt</string>
+   </property>
+  </action>
+  <action name="actionX_2">
+   <property name="text">
+    <string>x</string>
+   </property>
+  </action>
+  <action name="actionY_2">
+   <property name="text">
+    <string>y</string>
+   </property>
+  </action>
+  <action name="actionTime_3">
+   <property name="text">
+    <string>time</string>
+   </property>
+  </action>
+  <action name="actionAmp_3">
+   <property name="text">
+    <string>amp</string>
+   </property>
+  </action>
+  <action name="actionD_amp_dt_3">
+   <property name="text">
+    <string>d(amp)/dt</string>
+   </property>
+  </action>
+  <action name="actionTheta_3">
+   <property name="text">
+    <string>theta</string>
+   </property>
+  </action>
+  <action name="actionD_theta_dt_3">
+   <property name="text">
+    <string>d(theta)/dt</string>
+   </property>
+  </action>
+  <action name="actionX_3">
+   <property name="text">
+    <string>x</string>
+   </property>
+  </action>
+  <action name="actionY_3">
+   <property name="text">
+    <string>y</string>
+   </property>
+  </action>
+  <action name="actionTime_4">
+   <property name="text">
+    <string>time</string>
+   </property>
+  </action>
+  <action name="actionAmp_4">
+   <property name="text">
+    <string>amp</string>
+   </property>
+  </action>
+  <action name="actionD_amp_dt_4">
+   <property name="text">
+    <string>d(amp)/dt</string>
+   </property>
+  </action>
+  <action name="actionTheta_4">
+   <property name="text">
+    <string>theta</string>
+   </property>
+  </action>
+  <action name="actionD_theta_dt_4">
+   <property name="text">
+    <string>d(theta)/dt</string>
+   </property>
+  </action>
+  <action name="actionX_4">
+   <property name="text">
+    <string>x</string>
+   </property>
+  </action>
+  <action name="actionY_4">
+   <property name="text">
+    <string>y</string>
+   </property>
+  </action>
+  <action name="actionRemove">
+   <property name="text">
+    <string>remove</string>
+   </property>
+  </action>
+  <action name="actionUpdate">
+   <property name="text">
+    <string>Update</string>
+   </property>
+  </action>
+ </widget>
+ <layoutdefault spacing="6" margin="11"/>
+ <customwidgets>
+  <customwidget>
+   <class>QwtPlot</class>
+   <extends>QFrame</extends>
+   <header>qwt_plot.h</header>
+  </customwidget>
+ </customwidgets>
+ <resources/>
+ <connections/>
+</ui>
