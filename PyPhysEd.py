@@ -10,15 +10,33 @@ from PyQt4 import QtGui, QtCore, Qt
 import cv2
 import PyQt4.Qwt5 as Qwt
 import numpy as np
-from test_ui import Ui_MainWindow
-from my_pop import Ui_Form
+from mainwindow import Ui_mainwindow
+from cvparams import Ui_cvparams
+from about import Ui_about
 from os.path import isfile, splitext
+
+
+class About(QtGui.QMainWindow):
+    ''' intro windows explaining licences and copyright and dependencies'''
+    def __init__(self):
+        QtGui.QWidget.__init__(self)
+        self.uiabout=Ui_about()
+        self.uiabout.setupUi(self)
+        self._timer = QtCore.QTimer(self)
+        self._timer.timeout.connect(self.exitAbout)
+        self._timer.start(10)  
+        self.time_test=0
+
+    def exitAbout(self):
+        if self.time_test==100:
+            self.close()
+        self.time_test+=1
 
 class Popup(QtGui.QMainWindow):
     '''Pop up window to define tracking parameters'''
     def __init__(self,lkp_in,fp_in):
         QtGui.QWidget.__init__(self)
-        self.uipop=Ui_Form()
+        self.uipop=Ui_cvparams()
         self.uipop.setupUi(self)
         self.lkp_def=lkp_in
         self.fp_def=fp_in
@@ -58,7 +76,7 @@ class Example(QtGui.QMainWindow):
 
     def __init__(self,parent=None):
         QtGui.QWidget.__init__(self,parent)
-        self.ui = Ui_MainWindow()        
+        self.ui = Ui_mainwindow()        
         self.ui.setupUi(self)
         self.initUI()
         self._timer = QtCore.QTimer(self)
@@ -76,6 +94,9 @@ class Example(QtGui.QMainWindow):
         QtCore.QObject.connect(self.ui.actionUpdate,
                                QtCore.SIGNAL("triggered()"), 
                                self.paramsUpdate)
+        QtCore.QObject.connect(self.ui.actionSave,
+                               QtCore.SIGNAL("triggered()"), 
+                               self.save)
         QtCore.QObject.connect(self.ui.pushStart,
                                QtCore.SIGNAL("clicked()"), 
                                self.playOK)
@@ -175,6 +196,9 @@ class Example(QtGui.QMainWindow):
                                lambda y2="y": self.changey2(y2))
         
     def initUI(self):      
+        self.about=About()
+        self.about.show()
+
         self.loop=0
         self.features=[]
         self.origin=[]
@@ -229,15 +253,8 @@ class Example(QtGui.QMainWindow):
         ''' will save all data in array '''
         save = QtGui.QFileDialog()
         save.setOption(QtGui.QFileDialog.DontUseNativeDialog)
-        fname=save.getOpenFileName(self,'Open file','.')
-        time=np.linspace(0,(self.i_time+self.init_size)*self.time_step,
-                         (self.i_time+self.init_size))
-        temp=np.rot90(np.vstack((time,self.data[self.i_time:self.i_time+2000])))
-        np.savetxt(str(fname),temp)
-        temp=np.rot90(np.vstack((self.freq,np.real(self.psd))))
-        path,ext=os.path.splitext(str(fname))
-        print 'path = ',str(path),' ext = ',str(ext),' new = ',str(path)+'_fft'+str(ext)
-        np.savetxt(str(path)+'_fft'+str(ext),temp)
+        fname=save.getSaveFileName(self,'Open file','.')
+        np.savetxt(str(fname),self.graph_data)
 
     def camDialog(self):
         self.capture = cv2.VideoCapture(0)
