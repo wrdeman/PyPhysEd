@@ -226,6 +226,7 @@ class Example(QtGui.QMainWindow):
             self.captureGot=True
 
     def save(self):
+        ''' will save all data in array '''
         save = QtGui.QFileDialog()
         save.setOption(QtGui.QFileDialog.DontUseNativeDialog)
         fname=save.getOpenFileName(self,'Open file','.')
@@ -319,8 +320,8 @@ class Example(QtGui.QMainWindow):
             self.ret, self.frame=self.capture.read()
             currentImage=self.frame
             if(self.ret!=False):
+                RcurrentImage=cv2.cvtColor(currentImage,cv2.COLOR_BGR2RGB)
                 if self.ui.freezeBox.checkState()!=2:
-                    RcurrentImage=cv2.cvtColor(currentImage,cv2.COLOR_BGR2RGB)
                     if (len(self.RpreviousImage)!=0) and len(self.features)!=0:
                         TRcurrentImage=self.trackPoint(RcurrentImage,self.RpreviousImage)
                         self.plotPoints()
@@ -328,22 +329,23 @@ class Example(QtGui.QMainWindow):
                     else:
                         TRcurrentImage=RcurrentImage
                 else:
-                    self.plotPoints()
-                    self.loop+=1
+                    TRcurrentImage=RcurrentImage
+                    if len(self.features)!=0:
+                        self.plotPoints()
+                        self.loop+=1
+                        self.freeze=True
+                    else:
+                        self.freeze=True
                 self.Qimg=self.convertImage(TRcurrentImage)
                 self.ui.video_lbl.setPixmap(self.Qimg)
                 self.ui.video_lbl.setScaledContents(True)           
                 self.RpreviousImage=RcurrentImage
-
                 if (self.loop==0 and self.ui.pausefirstBox.checkState()==2 and
                     self.ui.freezeBox.checkState()!=2):
-                    
                     self.captureGo=False
                     self.ui.pushStart.setText('Start')
                 else:
                     self.update()        
-                if self.ui.freezeBox.checkState()==2 and self.freeze==True:
-                    self.freeze=False
                         
     def trackPoint(self,cvImage,cvImage_prev):
         #track points in self.features and draw circle
@@ -464,7 +466,7 @@ class Example(QtGui.QMainWindow):
                                 self.Qimg=self.convertImage(img_event)
                                 self.ui.video_lbl.setPixmap(self.Qimg)
                                 self.ui.video_lbl.setScaledContents(True) 
-                                self.freeze=False
+ 
                 else:
                     '''now sort out feature point and discriminate between
                     one for free flow and freeze frame'''
@@ -476,6 +478,7 @@ class Example(QtGui.QMainWindow):
                                    10, 
                                    (255, 0, 0), 
                                    -1)
+                        self.freeze=False
                     else:
                         if p is not None:
                             for x, y in np.float32(p).reshape(-1, 2):

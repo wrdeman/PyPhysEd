@@ -141,7 +141,7 @@
     </property>
     <widget class="QMenu" name="menuInput">
      <property name="title">
-      <string>Input</string>
+      <string>Open</string>
      </property>
      <addaction name="actionFile"/>
      <addaction name="actionCam"/>
@@ -253,15 +253,24 @@
    <property name="text">
     <string>File</string>
    </property>
+   <property name="shortcut">
+    <string>Meta+F</string>
+   </property>
   </action>
   <action name="actionCam">
    <property name="text">
     <string>Cam</string>
    </property>
+   <property name="shortcut">
+    <string>Meta+C</string>
+   </property>
   </action>
   <action name="actionQuit">
    <property name="text">
     <string>Quit</string>
+   </property>
+   <property name="shortcut">
+    <string>Esc</string>
    </property>
   </action>
   <action name="actionTracking">
