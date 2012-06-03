@@ -183,6 +183,7 @@ class Example(QtGui.QMainWindow):
         self.RpreviousImage=np.array([])
         self.captureGot=False
         self.captureGo=False
+        self.freeze=False
         self.subplots=1
         self.max_loop=200
         self.remove2()
@@ -312,26 +313,37 @@ class Example(QtGui.QMainWindow):
         self.add2()
 
     def playCapture(self):
-        if self.captureGo==True and self.captureGot==True:
+        if (self.captureGo==True 
+            and self.captureGot==True
+            and self.freeze==False):
             self.ret, self.frame=self.capture.read()
             currentImage=self.frame
             if(self.ret!=False):
-                RcurrentImage=cv2.cvtColor(currentImage,cv2.COLOR_BGR2RGB)
-                if (len(self.RpreviousImage)!=0) and len(self.features)!=0:
-                    TRcurrentImage=self.trackPoint(RcurrentImage,self.RpreviousImage)
+                if self.ui.freezeBox.checkState()!=2:
+                    RcurrentImage=cv2.cvtColor(currentImage,cv2.COLOR_BGR2RGB)
+                    if (len(self.RpreviousImage)!=0) and len(self.features)!=0:
+                        TRcurrentImage=self.trackPoint(RcurrentImage,self.RpreviousImage)
+                        self.plotPoints()
+                        self.loop+=1
+                    else:
+                        TRcurrentImage=RcurrentImage
+                else:
                     self.plotPoints()
                     self.loop+=1
-                else:
-                    TRcurrentImage=RcurrentImage
                 self.Qimg=self.convertImage(TRcurrentImage)
                 self.ui.video_lbl.setPixmap(self.Qimg)
                 self.ui.video_lbl.setScaledContents(True)           
                 self.RpreviousImage=RcurrentImage
-                if self.loop==0 and self.ui.pausefirstBox.checkState()==2:
+
+                if (self.loop==0 and self.ui.pausefirstBox.checkState()==2 and
+                    self.ui.freezeBox.checkState()!=2):
+                    
                     self.captureGo=False
                     self.ui.pushStart.setText('Start')
                 else:
                     self.update()        
+                if self.ui.freezeBox.checkState()==2 and self.freeze==True:
+                    self.freeze=False
                         
     def trackPoint(self,cvImage,cvImage_prev):
         #track points in self.features and draw circle
@@ -435,50 +447,58 @@ class Example(QtGui.QMainWindow):
                                             **self.feature_params)
                 add_point=False
                 if (event.button() == QtCore.Qt.LeftButton 
-                    and QtGui.QApplication.keyboardModifiers()==QtCore.Qt.ShiftModifier 
-                    and len(self.origin)==0):
-                    if p is not None:
-                        for x, y in np.float32(p).reshape(-1, 2):
-                            if add_point==False:
-                                circ=((x-xscaled)**2+(y-yscaled)**2)**0.5
-                                if circ<50:
-                                    self.origin.append([(int(x),int(y))])
+                    and QtGui.QApplication.keyboardModifiers()==QtCore.Qt.ShiftModifier):
+                    '''first sort out origin which is raw data point 
+                    and not cvgoodfeatures'''
+                    if len(self.origin)==0:
+                        if p is not None:
+                            for x, y in np.float32(p).reshape(-1, 2):
+                                if add_point==False:
+                                    self.origin.append([(int(xscaled),int(yscaled))])
                                     add_point=True
                                     cv2.circle(img_event, 
-                                               (x, y), 
+                                               (xscaled,yscaled), 
                                                10, 
                                                (255, 255, 0), 
                                                -1)
-                                    if (len(self.features)!=0):
-                                        for x, y in np.float32(self.features).reshape(-1, 2):
+                                self.Qimg=self.convertImage(img_event)
+                                self.ui.video_lbl.setPixmap(self.Qimg)
+                                self.ui.video_lbl.setScaledContents(True) 
+                                self.freeze=False
+                else:
+                    '''now sort out feature point and discriminate between
+                    one for free flow and freeze frame'''
+                    if (self.ui.freezeBox.checkState()==2):
+                        self.features.append([(int(xscaled),int(yscaled))])
+                        add_point=True
+                        cv2.circle(img_event, 
+                                   (xscaled, yscaled), 
+                                   10, 
+                                   (255, 0, 0), 
+                                   -1)
+                    else:
+                        if p is not None:
+                            for x, y in np.float32(p).reshape(-1, 2):
+                                    if add_point==False:
+                                        circ=((x-xscaled)**2+(y-yscaled)**2)**0.5
+                                        if circ<50:
+                                            self.features.append([(int(x),int(y))])
+                                            add_point=True
                                             cv2.circle(img_event, 
                                                        (x, y), 
                                                        10, 
                                                        (255, 0, 0), 
                                                        -1)
-                                    self.Qimg=self.convertImage(img_event)
-                                    self.ui.video_lbl.setPixmap(self.Qimg)
-                                    self.ui.video_lbl.setScaledContents(True) 
-
-                else:
-                    if p is not None:
-                        for x, y in np.float32(p).reshape(-1, 2):
-                            if add_point==False:
-                                circ=((x-xscaled)**2+(y-yscaled)**2)**0.5
-                                if circ<50:
-                                    self.features.append([(int(x),int(y))])
-                                    add_point=True
-                                    cv2.circle(img_event, (x, y), 10, (255, 0, 0), -1)
-                                    if (len(self.origin)!=0):
-                                        for x, y in np.float32(self.origin).reshape(-1, 2):
-                                            cv2.circle(img_event, 
-                                                       (x, y), 
-                                                       10, 
-                                                       (255, 255, 0), 
-                                                       -1)
-                                    self.Qimg=self.convertImage(img_event)
-                                    self.ui.video_lbl.setPixmap(self.Qimg)
-                                    self.ui.video_lbl.setScaledContents(True)           
+                                            if (len(self.features)!=0):
+                                                for x, y in np.float32(self.features).reshape(-1, 2):
+                                                    cv2.circle(img_event, 
+                                                               (x, y), 
+                                                               10, 
+                                                               (255, 255, 0), 
+                                                               -1)
+                    self.Qimg=self.convertImage(img_event)
+                    self.ui.video_lbl.setPixmap(self.Qimg)
+                    self.ui.video_lbl.setScaledContents(True)           
 
     def keyPressEvent(self, e):
         if e.key() == QtCore.Qt.Key_Escape:
