@@ -1,0 +1,160 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<ui version="4.0">
+ <class>cvparams</class>
+ <widget class="QWidget" name="cvparams">
+  <property name="geometry">
+   <rect>
+    <x>0</x>
+    <y>0</y>
+    <width>534</width>
+    <height>257</height>
+   </rect>
+  </property>
+  <property name="windowTitle">
+   <string>Form</string>
+  </property>
+  <widget class="QWidget" name="layoutWidget">
+   <property name="geometry">
+    <rect>
+     <x>10</x>
+     <y>10</y>
+     <width>518</width>
+     <height>239</height>
+    </rect>
+   </property>
+   <layout class="QGridLayout" name="gridLayout">
+    <item row="0" column="1">
+     <widget class="QLabel" name="label_2">
+      <property name="text">
+       <string>feature_params</string>
+      </property>
+     </widget>
+    </item>
+    <item row="1" column="0">
+     <widget class="QTableWidget" name="lkp_Table">
+      <row>
+       <property name="text">
+        <string>winSize</string>
+       </property>
+      </row>
+      <row>
+       <property name="text">
+        <string>maxLevel</string>
+       </property>
+      </row>
+      <row>
+       <property name="text">
+        <string>Count</string>
+       </property>
+      </row>
+      <row>
+       <property name="text">
+        <string>EPS</string>
+       </property>
+      </row>
+      <row>
+       <property name="text">
+        <string>derivlam</string>
+       </property>
+      </row>
+      <column>
+       <property name="text">
+        <string/>
+       </property>
+      </column>
+      <item row="0" column="0">
+       <property name="text">
+        <string>50</string>
+       </property>
+      </item>
+      <item row="1" column="0">
+       <property name="text">
+        <string>100</string>
+       </property>
+      </item>
+      <item row="2" column="0">
+       <property name="text">
+        <string>50</string>
+       </property>
+      </item>
+      <item row="3" column="0">
+       <property name="text">
+        <string>0.1</string>
+       </property>
+      </item>
+      <item row="4" column="0">
+       <property name="text">
+        <string>0.0</string>
+       </property>
+      </item>
+     </widget>
+    </item>
+    <item row="1" column="1">
+     <widget class="QTableWidget" name="fp_Table">
+      <row>
+       <property name="text">
+        <string>max corners</string>
+       </property>
+      </row>
+      <row>
+       <property name="text">
+        <string>quality</string>
+       </property>
+      </row>
+      <row>
+       <property name="text">
+        <string>minDist</string>
+       </property>
+      </row>
+      <row>
+       <property name="text">
+        <string>block</string>
+       </property>
+      </row>
+      <column>
+       <property name="text">
+        <string/>
+       </property>
+      </column>
+      <item row="0" column="0">
+       <property name="text">
+        <string>500</string>
+       </property>
+      </item>
+      <item row="1" column="0">
+       <property name="text">
+        <string>0.001</string>
+       </property>
+      </item>
+      <item row="2" column="0">
+       <property name="text">
+        <string>7</string>
+       </property>
+      </item>
+      <item row="3" column="0">
+       <property name="text">
+        <string>7</string>
+       </property>
+      </item>
+     </widget>
+    </item>
+    <item row="2" column="0" colspan="2">
+     <widget class="QPushButton" name="pushClose">
+      <property name="text">
+       <string>Close</string>
+      </property>
+     </widget>
+    </item>
+    <item row="0" column="0">
+     <widget class="QLabel" name="label">
+      <property name="text">
+       <string>lk_params</string>
+      </property>
+     </widget>
+    </item>
+   </layout>
+  </widget>
+ </widget>
+ <resources/>
+ <connections/>
+</ui>
