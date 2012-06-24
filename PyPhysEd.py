@@ -234,8 +234,9 @@ class Example(QtGui.QMainWindow):
                                maxLevel = self.lkp_def[1], 
                                criteria = (cv2.TERM_CRITERIA_COUNT | 
                                            cv2.TERM_CRITERIA_EPS, 
-                                           self.lkp_def[2], self.lkp_def[3]),
-                               derivLambda = self.lkp_def[4] )  
+                                           self.lkp_def[2], self.lkp_def[3]))
+#,
+#                               derivLambda = self.lkp_def[4] )  
         self.feature_params = dict( maxCorners = self.fp_def[0], 
                                     qualityLevel = self.fp_def[1],
                                     minDistance = self.fp_def[2],

@@ -28,5 +28,6 @@ pip-log.txt
 
 *.MOV
 *.pyc
-*.pyc~
-*.py~
+*.*~
+*~
+.DS_Store

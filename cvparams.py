@@ -2,7 +2,7 @@
 
 # Form implementation generated from reading ui file 'myGUI/cvparams.ui'
 #
-# Created: Sun Jun  3 18:12:15 2012
+# Created: Sun Jun 17 19:31:02 2012
 #      by: PyQt4 UI code generator 4.9.1
 #
 # WARNING! All changes made in this file will be lost!
@@ -30,7 +30,7 @@ class Ui_cvparams(object):
         self.lkp_Table = QtGui.QTableWidget(self.layoutWidget)
         self.lkp_Table.setObjectName(_fromUtf8("lkp_Table"))
         self.lkp_Table.setColumnCount(1)
-        self.lkp_Table.setRowCount(5)
+        self.lkp_Table.setRowCount(4)
         item = QtGui.QTableWidgetItem()
         self.lkp_Table.setVerticalHeaderItem(0, item)
         item = QtGui.QTableWidgetItem()
@@ -39,8 +39,6 @@ class Ui_cvparams(object):
         self.lkp_Table.setVerticalHeaderItem(2, item)
         item = QtGui.QTableWidgetItem()
         self.lkp_Table.setVerticalHeaderItem(3, item)
-        item = QtGui.QTableWidgetItem()
-        self.lkp_Table.setVerticalHeaderItem(4, item)
         item = QtGui.QTableWidgetItem()
         self.lkp_Table.setHorizontalHeaderItem(0, item)
         item = QtGui.QTableWidgetItem()
@@ -51,8 +49,6 @@ class Ui_cvparams(object):
         self.lkp_Table.setItem(2, 0, item)
         item = QtGui.QTableWidgetItem()
         self.lkp_Table.setItem(3, 0, item)
-        item = QtGui.QTableWidgetItem()
-        self.lkp_Table.setItem(4, 0, item)
         self.gridLayout.addWidget(self.lkp_Table, 1, 0, 1, 1)
         self.fp_Table = QtGui.QTableWidget(self.layoutWidget)
         self.fp_Table.setObjectName(_fromUtf8("fp_Table"))
@@ -98,8 +94,6 @@ class Ui_cvparams(object):
         item.setText(QtGui.QApplication.translate("cvparams", "Count", None, QtGui.QApplication.UnicodeUTF8))
         item = self.lkp_Table.verticalHeaderItem(3)
         item.setText(QtGui.QApplication.translate("cvparams", "EPS", None, QtGui.QApplication.UnicodeUTF8))
-        item = self.lkp_Table.verticalHeaderItem(4)
-        item.setText(QtGui.QApplication.translate("cvparams", "derivlam", None, QtGui.QApplication.UnicodeUTF8))
         __sortingEnabled = self.lkp_Table.isSortingEnabled()
         self.lkp_Table.setSortingEnabled(False)
         item = self.lkp_Table.item(0, 0)
@@ -110,8 +104,6 @@ class Ui_cvparams(object):
         item.setText(QtGui.QApplication.translate("cvparams", "50", None, QtGui.QApplication.UnicodeUTF8))
         item = self.lkp_Table.item(3, 0)
         item.setText(QtGui.QApplication.translate("cvparams", "0.1", None, QtGui.QApplication.UnicodeUTF8))
-        item = self.lkp_Table.item(4, 0)
-        item.setText(QtGui.QApplication.translate("cvparams", "0.0", None, QtGui.QApplication.UnicodeUTF8))
         self.lkp_Table.setSortingEnabled(__sortingEnabled)
         item = self.fp_Table.verticalHeaderItem(0)
         item.setText(QtGui.QApplication.translate("cvparams", "max corners", None, QtGui.QApplication.UnicodeUTF8))
