@@ -1,2 +1,2 @@
-test_ui.py : myGUI/mainwindow.ui
-	pyuic4 myGUI/mainwindow.ui -o test_ui.py
+ui.py : gui/mainWindow.ui
+	pyuic4-2.7 gui/mainWindow.ui -o ui.py
