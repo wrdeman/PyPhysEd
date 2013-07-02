@@ -73,10 +73,11 @@ class Plot:
         #x-axis
         cv2.line(self.currentFrame,(xx2,yy2),(int(xx2+xx2*0.9),yy2),(255,0,0),1)
         
-        #xlabel
-        cv2.putText(self.currentFrame,"time",(int(xx2+(xx2*0.9/3)),int(yy2+40)),cv2.FONT_HERSHEY_PLAIN,3,(255,0,0))
-        #ylabel
-        cv2.putText(self.currentFrame,"x",(int(xx2-40),int(yy2*0.1+yy2/2)),cv2.FONT_HERSHEY_PLAIN,3,(255,0,0))
+        #xlabel x0,xly0
+        self.xaxis("time",xx2,dx,yy2)
+        self.yaxis("x",yy2,dy,xx2)
+
+
 
 
         xmax = np.amax(self.graphData[:,self.graphAxis[0]])
@@ -99,8 +100,25 @@ class Plot:
                 y_cv2 = ((ydat-ymin)/(ymax-ymin))*dy+yy2*0.1
                 cv2.line(self.currentFrame,(int(x_cv1),int(y_cv1)),(int(x_cv2),int(y_cv2)),(255,255,0),1)
 
+    def xaxis(self,string,x0,xLen,y0):
+        cv2.putText(self.currentFrame,
+                    string,
+                    (int(x0+(xLen/3)),
+                     int(y0+40)),
+                    cv2.FONT_HERSHEY_PLAIN,
+                    3,
+                    (255,0,0)
+                )
 
-            
+    def yaxis(self,string,y0,yLen,x0):
+        cv2.putText(self.currentFrame,
+                    string,
+                    (int(x0-40),
+                    int(y0*0.1+(y0/2))),
+                    cv2.FONT_HERSHEY_PLAIN,
+                    3,
+                    (255,0,0)
+                )
 
 
 
