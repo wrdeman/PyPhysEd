@@ -67,9 +67,17 @@ class Plot:
         #opencv lengths of axis
         dx = (xx2+xx2*0.9)-xx2
         dy = yy2 - (yy2*0.1)
-
+        
+        #y-axis
         cv2.line(self.currentFrame,(xx2,int(yy2*0.1)),(xx2,yy2),(255,0,0),1)
+        #x-axis
         cv2.line(self.currentFrame,(xx2,yy2),(int(xx2+xx2*0.9),yy2),(255,0,0),1)
+        
+        #xlabel
+        cv2.putText(self.currentFrame,"time",(int(xx2+(xx2*0.9/3)),int(yy2+40)),cv2.FONT_HERSHEY_PLAIN,3,(255,0,0))
+        #ylabel
+        cv2.putText(self.currentFrame,"x",(int(xx2-40),int(yy2*0.1+yy2/2)),cv2.FONT_HERSHEY_PLAIN,3,(255,0,0))
+
 
         xmax = np.amax(self.graphData[:,self.graphAxis[0]])
         xmin = np.amin(self.graphData[:,self.graphAxis[0]])
@@ -90,6 +98,9 @@ class Plot:
                 x_cv2 = ((xdat-xmin)/(xmax-xmin))*dx+xx2
                 y_cv2 = ((ydat-ymin)/(ymax-ymin))*dy+yy2*0.1
                 cv2.line(self.currentFrame,(int(x_cv1),int(y_cv1)),(int(x_cv2),int(y_cv2)),(255,255,0),1)
+
+
+            
 
 
 
