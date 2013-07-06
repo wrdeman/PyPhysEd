@@ -36,7 +36,7 @@ class Video():
         self.plot = Plot.Plot(self)
 
 
-    def captureNextFrame(self):
+    def captureNextFrame(self,plotOn):
         """
         capture frame and reverse RBG BGR and return opencv image
         """
@@ -46,8 +46,9 @@ class Video():
             if self.features!=[]:
                 self.trackPoints()
                 self.drawPoints()
-                self.plot.plotPoints()
-                self.plot.plotData()
+                if plotOn:
+                    self.plot.plotPoints()
+                    self.plot.plotData()
         else:
             self.currentFrame=np.array([])
 
