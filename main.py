@@ -70,7 +70,7 @@ class Gui(QtGui.QMainWindow):
                 self.video.convertFrame())
             self.ui.videoFrame.setScaledContents(True)
         except TypeError:
-            self.stop()
+            self.run = False
 
     def openFile(self):
         openfile=QtGui.QFileDialog()
@@ -89,8 +89,16 @@ class Gui(QtGui.QMainWindow):
             self.plot=True
 
     def mousePressEvent(self, event):
-        self.video.addPoint(QtCore.QPoint(event.pos()),
-                            self.ui.videoFrame.geometry())
+        if (event.button() == QtCore.Qt.LeftButton
+            and QtGui.QApplication.keyboardModifiers()
+            ==QtCore.Qt.ShiftModifier):
+            self.video.addOrigin(QtCore.QPoint(event.pos()),
+                                self.ui.videoFrame.geometry())
+        
+        else:
+            self.video.addPoint(QtCore.QPoint(event.pos()),
+                                self.ui.videoFrame.geometry())
+
 
     def keyPressEvent(self, e):
         if e.key() == QtCore.Qt.Key_Escape:

@@ -75,8 +75,8 @@ class Video():
                 img_event=cv2.cvtColor(img_event,cv2.COLOR_BGR2RGB) 
                 height,width=img_event.shape[:2]
                 # scale PyQt coordinates to OpenCV
-                xscaled=int(width*(xpos-init_image_x)/image_x)  
-                yscaled=int(height*(ypos-init_image_y)/image_y)
+                xscaled=int(width*(xpos-init_image_x)/(image_x-init_image_x))  
+                yscaled=int(height*(ypos-init_image_y)/(image_y-init_image_y))
                 term = ( cv2.TERM_CRITERIA_EPS | cv2.TERM_CRITERIA_COUNT, 30, 0.1 )
                 gray = cv2.cvtColor(img_event, cv2.COLOR_RGB2GRAY)
                 mask = np.zeros_like(gray)
@@ -108,6 +108,30 @@ class Video():
                                                    -1)
 
 
+    def addOrigin(self, lastPos,video_params):
+        """
+        add an origin
+        switch between opencv coordinates and PyQt
+
+        """
+        image_x=video_params.right()
+        image_y=video_params.bottom()
+        init_image_x=video_params.left()
+        init_image_y=video_params.top()
+
+        if self.currentFrame.size!=0:
+            img_event=self.currentFrame
+            # x and y position of mouseclick relative to PyQt
+            xpos=lastPos.x()  
+            ypos=lastPos.y()
+            if ((xpos-init_image_x)<image_x 
+                and (ypos-init_image_y)<image_y):
+                height,width=img_event.shape[:2]
+                # scale PyQt coordinates to OpenCV
+                xscaled=int(width*(xpos-init_image_x)/(image_x-init_image_x))  
+                yscaled=int(height*(ypos-init_image_y)/(image_y-init_image_y))
+                self.origin.append([(int(xscaled),int(yscaled))])
+
 
     def trackPoints(self):
         #track points in self.features and draw circle
@@ -125,14 +149,17 @@ class Video():
             if len(tr) > len(self.features):
                 del tr[0]
             new_tracks.append(tr)
-            cv2.circle(self.currentFrame, (x, y), 10, (255, 0, 0), -1)
+            cv2.circle(self.currentFrame, 
+                       (x, y), 
+                       10, (255, 0, 0), -1)
         self.features = new_tracks
-      
-#draww origin
-#        p0 = np.float32([tr[-1] for tr in self.origin]).reshape(-1, 1, 2)
-#        for tr, (x, y) in zip(self.origin, p0.reshape(-1, 2)):
-#            cv2.circle(cvImage, (x, y), 10, (255, 255, 0), -1)      
-#        return cvImage
+
+        p0 = np.float32([tr[-1] for tr in self.origin]).reshape(-1, 1, 2)
+        for tr, (x, y) in zip(self.origin, p0.reshape(-1, 2)):
+            if self.origin != []:
+                cv2.circle(self.currentFrame, 
+                           (x,y), 
+                           10, (255, 255, 0), -1)     
 
     def convertFrame(self):
         """
