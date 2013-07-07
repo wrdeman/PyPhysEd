@@ -48,25 +48,20 @@
       </widget>
      </item>
      <item>
-      <widget class="QComboBox" name="comboXAxisBox">
+      <widget class="QComboBox" name="comboXAxis">
        <item>
         <property name="text">
-         <string>x</string>
+         <string>t</string>
         </property>
        </item>
        <item>
         <property name="text">
-         <string>y</string>
+         <string>amplitude</string>
         </property>
        </item>
        <item>
         <property name="text">
-         <string>dx</string>
-        </property>
-       </item>
-       <item>
-        <property name="text">
-         <string>dy</string>
+         <string>d(amplitude)/dt</string>
         </property>
        </item>
        <item>
@@ -76,31 +71,36 @@
        </item>
        <item>
         <property name="text">
-         <string>detheta</string>
+         <string>d(theta)/dt</string>
+        </property>
+       </item>
+       <item>
+        <property name="text">
+         <string>x</string>
+        </property>
+       </item>
+       <item>
+        <property name="text">
+         <string>y</string>
         </property>
        </item>
       </widget>
      </item>
      <item>
-      <widget class="QComboBox" name="comboYAxisBox">
+      <widget class="QComboBox" name="comboYAxis">
        <item>
         <property name="text">
-         <string>x</string>
+         <string>t</string>
         </property>
        </item>
        <item>
         <property name="text">
-         <string>y</string>
+         <string>amplitude</string>
         </property>
        </item>
        <item>
         <property name="text">
-         <string>dx</string>
-        </property>
-       </item>
-       <item>
-        <property name="text">
-         <string>dy</string>
+         <string>d(amplitude)/dt</string>
         </property>
        </item>
        <item>
@@ -110,7 +110,17 @@
        </item>
        <item>
         <property name="text">
-         <string>detheta</string>
+         <string>d(theta)/dt</string>
+        </property>
+       </item>
+       <item>
+        <property name="text">
+         <string>x</string>
+        </property>
+       </item>
+       <item>
+        <property name="text">
+         <string>y</string>
         </property>
        </item>
       </widget>
@@ -175,6 +185,9 @@
   <action name="actionGraph">
    <property name="text">
     <string>Graph</string>
+   </property>
+   <property name="shortcut">
+    <string>G</string>
    </property>
   </action>
  </widget>

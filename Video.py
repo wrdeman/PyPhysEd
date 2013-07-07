@@ -18,7 +18,8 @@ class Video():
         self.capture = capture
         self.features = []
         self.origin = []
-        self.simon = "i am here"
+        self.XAxis = 0
+        self.YAxis = 1
         self.currentFrame=np.array([])
         self.previousFrame=np.array([])
         self.lkp_def=([50,100,50,0.1,0.0])
@@ -36,10 +37,11 @@ class Video():
         self.plot = Plot.Plot(self)
 
 
-    def captureNextFrame(self,plotOn):
+    def captureNextFrame(self,plotOn,dt):
         """
         capture frame and reverse RBG BGR and return opencv image
         """
+        self.dt = dt
         ret, readFrame=self.capture.read()
         if(ret==True):
             self.currentFrame=cv2.cvtColor(readFrame,cv2.COLOR_BGR2RGB)
@@ -48,11 +50,16 @@ class Video():
                 self.drawPoints()
                 if plotOn:
                     self.plot.plotPoints()
-                    self.plot.plotData()
+                    self.plot.plotData(self.XAxis,self.YAxis)
         else:
             self.currentFrame=np.array([])
 
+    def changeXAxis(self, xInt):
+        self.XAxis = xInt
 
+    def changeYAxis(self, yInt):
+        self.YAxis = yInt
+    
 
     def addPoint(self, lastPos,video_params):
         """

@@ -11,6 +11,7 @@ import cv2
 from PyQt4 import QtGui, QtCore, Qt
 from ui import Ui_MainWindow
 from Video import Video
+import time
 
 class Gui(QtGui.QMainWindow):
     def __init__(self,parent=None):
@@ -21,9 +22,11 @@ class Gui(QtGui.QMainWindow):
         self._timer = QtCore.QTimer(self)
         self.run = False
         self.plot = False
-        self._timer.timeout.connect(self.changeStartStop)
+        self.ui.comboYAxis.setCurrentIndex(1)
+        self._timer.timeout.connect(self.capture)
         self._timer.start(10)
         self.update()
+        self.dt = 0
         #connect the start / stop button
         QtCore.QObject.connect(self.ui.startVideoButton,
                                QtCore.SIGNAL("clicked()"),
@@ -44,11 +47,27 @@ class Gui(QtGui.QMainWindow):
                                QtCore.SIGNAL("triggered()"),
                                self.plotOn)
 
+        QtCore.QObject.connect(self.ui.comboXAxis,
+                               QtCore.SIGNAL("currentIndexChanged(QString)"),self.changeXAxis)
+
+        QtCore.QObject.connect(self.ui.comboYAxis,
+                               QtCore.SIGNAL("currentIndexChanged(QString)"),self.changeYAxis)
+                               
+
+    def changeXAxis(self):
+        self.video.changeXAxis(
+            int(self.ui.comboXAxis.currentIndex())
+        )
+
+    def changeYAxis(self):
+        self.video.changeYAxis(
+            int(self.ui.comboYAxis.currentIndex())
+        )
+
     def changeStartStop(self):
         if self.run:
             self.run = False
             self.ui.startVideoButton.setText('Start')
-            self.capture()
         else:
             self.run = True
             self.ui.startVideoButton.setText('Stop')
@@ -64,13 +83,16 @@ class Gui(QtGui.QMainWindow):
         """
         gets the video frame and converts it Qt format
         """
-        try:
-            self.video.captureNextFrame(self.plot)
-            self.ui.videoFrame.setPixmap(
-                self.video.convertFrame())
-            self.ui.videoFrame.setScaledContents(True)
-        except TypeError:
-            self.run = False
+        start = time.time()
+        if self.run:
+            try:
+                self.video.captureNextFrame(self.plot,self.dt)
+                self.ui.videoFrame.setPixmap(
+                    self.video.convertFrame())
+                self.ui.videoFrame.setScaledContents(True)
+            except TypeError:
+                self.run = False
+        self.dt = int(1000*(time.time()-start))
 
     def openFile(self):
         openfile=QtGui.QFileDialog()
