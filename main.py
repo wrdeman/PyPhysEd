@@ -125,8 +125,9 @@ class Gui(QtGui.QMainWindow):
     def keyPressEvent(self, e):
         if e.key() == QtCore.Qt.Key_Escape:
             self.close()
-#        if e.key() == QtCore.Qt.Key_Backspace:
-#            self.features.pop(len(self.features)-1)
+        if e.key() == QtCore.Qt.Key_Return:
+            #return becasue mac os x
+            self.video.deleteLastPoint()
 
    
 def main():

@@ -114,6 +114,10 @@ class Video():
                                                    (255, 255, 0), 
                                                    -1)
 
+    def deleteLastPoint(self):
+        if len(self.features)-1 > 0:
+            self.features.pop(len(self.features)-1)
+
 
     def addOrigin(self, lastPos,video_params):
         """
@@ -125,19 +129,20 @@ class Video():
         image_y=video_params.bottom()
         init_image_x=video_params.left()
         init_image_y=video_params.top()
-
-        if self.currentFrame.size!=0:
-            img_event=self.currentFrame
-            # x and y position of mouseclick relative to PyQt
-            xpos=lastPos.x()  
-            ypos=lastPos.y()
-            if ((xpos-init_image_x)<image_x 
-                and (ypos-init_image_y)<image_y):
-                height,width=img_event.shape[:2]
-                # scale PyQt coordinates to OpenCV
-                xscaled=int(width*(xpos-init_image_x)/(image_x-init_image_x))  
-                yscaled=int(height*(ypos-init_image_y)/(image_y-init_image_y))
-                self.origin.append([(int(xscaled),int(yscaled))])
+        
+        if len(self.origin) < 1:
+            if self.currentFrame.size!=0:
+                img_event=self.currentFrame
+                # x and y position of mouseclick relative to PyQt
+                xpos=lastPos.x()  
+                ypos=lastPos.y()
+                if ((xpos-init_image_x)<image_x 
+                    and (ypos-init_image_y)<image_y):
+                    height,width=img_event.shape[:2]
+                    # scale PyQt coordinates to OpenCV
+                    xscaled=int(width*(xpos-init_image_x)/(image_x-init_image_x))  
+                    yscaled=int(height*(ypos-init_image_y)/(image_y-init_image_y))
+                    self.origin.append([(int(xscaled),int(yscaled))])
 
 
     def trackPoints(self):
