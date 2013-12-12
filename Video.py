@@ -50,8 +50,8 @@ class Video():
             if self.features != []:
                 self.track_points()
                 self.draw_points()
-                self.plot.plotPoints()
-                self.plot.plotData()
+                self.plot.plot_points()
+                self.plot.plot_data()
         else:
             self.current_frame = np.array([])
 
