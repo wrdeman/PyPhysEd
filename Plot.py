@@ -55,7 +55,7 @@ class Plot:
 
     def plotData(self):        
 #opencv axis
-        self.currentFrame=self.video.currentFrame
+        self.currentFrame=self.video.current_frame
         yy2,xx2=self.currentFrame.shape[:2]
 
         xx1=0

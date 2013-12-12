@@ -1,4 +1,4 @@
-#!/opt/local/bin/python
+#!/usr/bin/python
 """
 Module for opencv tracking of objects
 
@@ -13,8 +13,8 @@ from ui import Ui_MainWindow
 from Video import Video
 
 class Gui(QtGui.QMainWindow):
-    def __init__(self,parent=None):
-        QtGui.QWidget.__init__(self,parent)
+    def __init__(self, parent=None):
+        QtGui.QWidget.__init__(self, parent)
         self.ui = Ui_MainWindow()
         self.ui.setupUi(self)
         self.video = Video(cv2.VideoCapture(0))
@@ -24,20 +24,30 @@ class Gui(QtGui.QMainWindow):
         self.update()
  
     def play(self):
+        '''
+        capture frame and display
+        '''
         try:
-            self.video.captureNextFrame()
+            self.video.capture_next_frame()
             self.ui.videoFrame.setPixmap(
-                self.video.convertFrame())
+                self.video.convert_frame())
             self.ui.videoFrame.setScaledContents(True)
         except TypeError:
             print "No frame"
 
 
     def mousePressEvent(self, event):
-        self.video.addPoint(QtCore.QPoint(event.pos()),self.ui.videoFrame.geometry())
+        '''
+        click mouse and put point on opencv window
+        '''
+        self.video.add_point(QtCore.QPoint(event.pos()), 
+                            self.ui.videoFrame.geometry())
 
    
 def main():
+    '''
+    main PyQt GUI
+    '''
     app = QtGui.QApplication(sys.argv)
     ex = Gui()
     ex.show()
