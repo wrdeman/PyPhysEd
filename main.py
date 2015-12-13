@@ -10,8 +10,33 @@ import sys
 import cv2
 from PyQt4 import QtGui, QtCore, Qt
 from ui import Ui_MainWindow
+from snapUI import Ui_Form
 from Video import Video
 import time
+
+class Popup(QtGui.QMainWindow):
+    '''Pop up window to define tracking parameters'''
+    def __init__(self,calibParams):
+        self.calibParams=calibParams
+        self.snap = Ui_Form()
+        self.snap.setupUi(self)
+
+        QtGui.QWidget.__init__(self)
+
+        QtCore.QObject.connect(self.snap.tableData,
+                               QtCore.SIGNAL("cellChanged(int, int)"),
+                               self.getParams)
+        QtCore.QObject.connect(self.snap.snapShot,
+                               QtCore.SIGNAL("clicked()"),
+                               self.close)
+
+    def getParams(self):
+        for i in range(len(self.calibParams)):
+            if i<2:
+                self.calibParams[i]=int(self.snap.tableData.item(i, 0).text())
+            else:
+                self.calibParams[i]=float(self.snap.tableData.item(i, 0).text())
+
 
 class Gui(QtGui.QMainWindow):
     def __init__(self,parent=None):
@@ -27,6 +52,7 @@ class Gui(QtGui.QMainWindow):
         self._timer.start(10)
         self.update()
         self.dt = 0
+        self.calibParams=[1,1]
         #connect the start / stop button
         QtCore.QObject.connect(self.ui.startVideoButton,
                                QtCore.SIGNAL("clicked()"),
@@ -42,10 +68,15 @@ class Gui(QtGui.QMainWindow):
                                QtCore.SIGNAL("triggered()"),
                                self.close)
 
-        # connect the close button
+        # connect the graph button
         QtCore.QObject.connect(self.ui.actionGraph,
                                QtCore.SIGNAL("triggered()"),
                                self.plotOn)
+
+        # connect the calib button
+        QtCore.QObject.connect(self.ui.actionCalib,
+                               QtCore.SIGNAL("triggered()"),
+                               self.calibDialog)
 
         QtCore.QObject.connect(self.ui.comboXAxis,
                                QtCore.SIGNAL("currentIndexChanged(QString)"),self.changeXAxis)
@@ -53,6 +84,11 @@ class Gui(QtGui.QMainWindow):
         QtCore.QObject.connect(self.ui.comboYAxis,
                                QtCore.SIGNAL("currentIndexChanged(QString)"),self.changeYAxis)
                                
+
+
+    def calibDialog(self):
+        self.pop=Popup(self.calibParams)
+        self.pop.show()
 
     def changeXAxis(self):
         self.video.changeXAxis(

@@ -17,8 +17,8 @@
    <widget class="QLabel" name="videoFrame">
     <property name="geometry">
      <rect>
-      <x>91</x>
-      <y>15</y>
+      <x>120</x>
+      <y>-10</y>
       <width>611</width>
       <height>501</height>
      </rect>
@@ -35,7 +35,7 @@
      <rect>
       <x>110</x>
       <y>550</y>
-      <width>285</width>
+      <width>389</width>
       <height>32</height>
      </rect>
     </property>
@@ -150,6 +150,7 @@
      <string>Plot</string>
     </property>
     <addaction name="actionGraph"/>
+    <addaction name="actionCalib"/>
    </widget>
    <addaction name="menuFile"/>
    <addaction name="menuPlot"/>
@@ -188,6 +189,11 @@
    </property>
    <property name="shortcut">
     <string>G</string>
+   </property>
+  </action>
+  <action name="actionCalib">
+   <property name="text">
+    <string>Calib</string>
    </property>
   </action>
  </widget>

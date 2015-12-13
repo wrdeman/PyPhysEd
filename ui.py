@@ -2,7 +2,7 @@
 
 # Form implementation generated from reading ui file 'gui/mainWindow.ui'
 #
-# Created: Sun Jul  7 19:40:26 2013
+# Created: Tue Jul  9 22:58:13 2013
 #      by: PyQt4 UI code generator 4.10.2
 #
 # WARNING! All changes made in this file will be lost!
@@ -30,12 +30,12 @@ class Ui_MainWindow(object):
         self.centralwidget = QtGui.QWidget(MainWindow)
         self.centralwidget.setObjectName(_fromUtf8("centralwidget"))
         self.videoFrame = QtGui.QLabel(self.centralwidget)
-        self.videoFrame.setGeometry(QtCore.QRect(91, 15, 611, 501))
+        self.videoFrame.setGeometry(QtCore.QRect(120, -10, 611, 501))
         self.videoFrame.setAutoFillBackground(True)
         self.videoFrame.setText(_fromUtf8(""))
         self.videoFrame.setObjectName(_fromUtf8("videoFrame"))
         self.layoutWidget = QtGui.QWidget(self.centralwidget)
-        self.layoutWidget.setGeometry(QtCore.QRect(110, 550, 285, 32))
+        self.layoutWidget.setGeometry(QtCore.QRect(110, 550, 389, 32))
         self.layoutWidget.setObjectName(_fromUtf8("layoutWidget"))
         self.horizontalLayout = QtGui.QHBoxLayout(self.layoutWidget)
         self.horizontalLayout.setMargin(0)
@@ -83,10 +83,13 @@ class Ui_MainWindow(object):
         self.actionQuit.setObjectName(_fromUtf8("actionQuit"))
         self.actionGraph = QtGui.QAction(MainWindow)
         self.actionGraph.setObjectName(_fromUtf8("actionGraph"))
+        self.actionCalib = QtGui.QAction(MainWindow)
+        self.actionCalib.setObjectName(_fromUtf8("actionCalib"))
         self.menuFile.addAction(self.actionOpen)
         self.menuFile.addAction(self.actionSave)
         self.menuFile.addAction(self.actionQuit)
         self.menuPlot.addAction(self.actionGraph)
+        self.menuPlot.addAction(self.actionCalib)
         self.menubar.addAction(self.menuFile.menuAction())
         self.menubar.addAction(self.menuPlot.menuAction())
 
@@ -121,4 +124,5 @@ class Ui_MainWindow(object):
         self.actionQuit.setShortcut(_translate("MainWindow", "Ctrl+Q", None))
         self.actionGraph.setText(_translate("MainWindow", "Graph", None))
         self.actionGraph.setShortcut(_translate("MainWindow", "G", None))
+        self.actionCalib.setText(_translate("MainWindow", "Calib", None))
 
