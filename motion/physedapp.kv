@@ -1,0 +1,18 @@
+#:kivy 1.9.0
+
+<MainApp>:
+    orientation: 'vertical'
+
+    CameraWidget:
+        id: camera_id
+
+    PlayButton:
+        id: togglebutton_id   
+
+<CameraWidget>:
+    resolution: (640, 480)
+
+<PlayButton>:
+    text: 'Play'
+    size_hint_y: None
+    height: '48dp'
